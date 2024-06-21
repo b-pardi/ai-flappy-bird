@@ -8,6 +8,7 @@ class Population:
     def update_live_players(self):
         for bird in self.birds:
             if bird.alive:
+                bird.look()
                 bird.think()
                 bird.draw_bird(comps.window)
                 bird.update(comps.ground)

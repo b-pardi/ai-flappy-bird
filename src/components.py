@@ -1,6 +1,8 @@
 import pygame
 import random
 
+import src.net as net
+
 win_height = 720
 win_width = 550
 default_pipe_spawn_time = 200
@@ -46,7 +48,6 @@ class Pipe:
         if self.x + Pipe.width < - self.width:
             self.offscreen = True
 
-
 class Bird:
     size = 20
     init_x_loc = 50
@@ -68,6 +69,10 @@ class Bird:
 
         # AI vars
         self.decision = None
+        self.vision = [0.5, 1, 0.5]
+        self.n_inputs = 3
+        self.brain = net.Net(self.n_inputs)
+        self.brain.generate_net()
 
     def draw_bird(self, draw_window):
         pygame.draw.rect(draw_window, self.color, self.rect)
@@ -100,10 +105,33 @@ class Bird:
         if self.vel >= 3:
             self.flap = False
 
+    @staticmethod
+    def closest_pipe():
+        for pipe in pipes:
+            if not pipe.passed:
+                return pipe
+            
+    def look(self):
+        if pipes:
+            # line to top pipe
+            player_y = self.rect.center[1]
+            player_x = self.rect.center[0]
+            bottom_of_top_pipe = self.closest_pipe().top_rect.bottom
+            left_of_closest_pipe = self.closest_pipe().x
+            top_of_bottom_pipe = self.closest_pipe().bottom_rect.top
+            self.vision[0] = max(0, player_y - bottom_of_top_pipe) / Ground.ground_level
+            self.vision[1] = max(0, left_of_closest_pipe - player_x) / Ground.ground_level
+            self.vision[2] = max(0, top_of_bottom_pipe - player_y) / Ground.ground_level
+
+
+            pygame.draw.line(window, self.color, self.rect.center, (player_x, bottom_of_top_pipe))
+            pygame.draw.line(window, self.color, self.rect.center, (left_of_closest_pipe, player_y))
+            pygame.draw.line(window, self.color, self.rect.center, (player_x, top_of_bottom_pipe))
+
     # AI functions
     def think(self):
         # to flap or not to flap, that is the question
-        self.decision = random.uniform(0, 1)
+        self.decision = self.brain.ff(self.vision)
         if self.decision > self.flap_thresh:
             self.bird_flap()
 
