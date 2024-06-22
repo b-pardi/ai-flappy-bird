@@ -3,6 +3,10 @@ import random
 
 import src.net as net
 
+'''
+make lifespan num pipes crossed instead
+'''
+
 win_height = 720
 win_width = 550
 default_pipe_spawn_time = 200
@@ -54,7 +58,7 @@ class Bird:
     init_y_loc = 200
     vel_incr = 0.25
     vel_cap = 5
-    flap_thresh = 0.73 # threshold value that if guessed btwn 0 and 1, will flap if above
+    flap_thresh = 0.68 # threshold value that if guessed btwn 0 and 1, will flap if above
 
     def __init__(self):
         self.x, self.y = self.init_x_loc, self.init_y_loc
@@ -66,11 +70,13 @@ class Bird:
         self.vel = 0
         self.flap = False
         self.alive = True
+        self.lifespan = 0
 
         # AI vars
         self.decision = None
         self.vision = [0.5, 1, 0.5]
         self.n_inputs = 3
+        self.fitness = 0
         self.brain = net.Net(self.n_inputs)
         self.brain.generate_net()
 
@@ -97,12 +103,13 @@ class Bird:
             self.rect.y += self.vel
             if self.vel > 5:
                 self.vel = 5
+            self.lifespan += 1
 
     def bird_flap(self):
         if not self.flap and not self.sky_collision():
             self.flap = True
             self.vel = -5
-        if self.vel >= 3:
+        if self.vel >= 1:
             self.flap = False
 
     @staticmethod
@@ -119,11 +126,15 @@ class Bird:
             bottom_of_top_pipe = self.closest_pipe().top_rect.bottom
             left_of_closest_pipe = self.closest_pipe().x
             top_of_bottom_pipe = self.closest_pipe().bottom_rect.top
+
+            # line of sight from bird to bottom edge of closest top pipe
             self.vision[0] = max(0, player_y - bottom_of_top_pipe) / Ground.ground_level
+            # line of sight from bird to left edge of closest pipe
             self.vision[1] = max(0, left_of_closest_pipe - player_x) / Ground.ground_level
+            # line of sight from bird to top of bottom edge of closest pipe
             self.vision[2] = max(0, top_of_bottom_pipe - player_y) / Ground.ground_level
 
-
+            # draw the vision lines
             pygame.draw.line(window, self.color, self.rect.center, (player_x, bottom_of_top_pipe))
             pygame.draw.line(window, self.color, self.rect.center, (left_of_closest_pipe, player_y))
             pygame.draw.line(window, self.color, self.rect.center, (player_x, top_of_bottom_pipe))
@@ -134,6 +145,16 @@ class Bird:
         self.decision = self.brain.ff(self.vision)
         if self.decision > self.flap_thresh:
             self.bird_flap()
+
+    def calculate_fitness(self):
+        self.fitness = self.lifespan
+
+    def clone(self):
+        clone = Bird()
+        clone.fitness = self.fitness
+        clone.brain = self.brain.clone()
+        clone.brain.generate_net()
+        return clone
 
 window = pygame.display.set_mode((win_width, win_height))
 

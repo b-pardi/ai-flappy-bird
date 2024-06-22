@@ -15,7 +15,7 @@ def check_quit_game():
             sys.exit()
 
 if __name__ == '__main__':
-    pipe_spawn_time = 5
+    pipe_spawn_time = 0
 
     while True:
         check_quit_game()
@@ -41,7 +41,8 @@ if __name__ == '__main__':
         if not population.is_extinct():
             population.update_live_players()
         else:
-            pass
+            comps.pipes.clear() # clear all existing pipes before spawning next generation
+            population.natural_selection()
 
 
         clock.tick(60)
