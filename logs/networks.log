@@ -1,0 +1,40 @@
+2024-09-04 15:00:07,054 - INFO - Generation 1 Best Bird:
+2024-09-04 15:00:07,054 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.7806451320648193, 'output_value': 0.7806451320648193}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': 0.0, 'output_value': 0.5}, {'id': 4, 'type': 1, 'input_sum': 0.13254845142364502, 'output_value': 0.13254845142364502}]
+2024-09-04 15:00:07,054 - INFO - Connections: [{'in_node_id': 0, 'out_node_id': 3, 'weight': 0.5286198854446411, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:11,508 - INFO - Generation 2 Best Bird:
+2024-09-04 15:00:11,508 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.3580645024776459, 'output_value': 0.3580645024776459}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': -0.27828022837638855, 'output_value': 0.4308754503726959}, {'id': 4, 'type': 1, 'input_sum': 0.9891332387924194, 'output_value': 0.9891332387924194}]
+2024-09-04 15:00:11,508 - INFO - Connections: [{'in_node_id': 4, 'out_node_id': 3, 'weight': -0.2813374698162079, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:15,794 - INFO - Generation 3 Best Bird:
+2024-09-04 15:00:15,794 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.3661290407180786, 'output_value': 0.3661290407180786}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': -0.16184738278388977, 'output_value': 0.45962628722190857}, {'id': 4, 'type': 1, 'input_sum': 0.1558409333229065, 'output_value': 0.1558409333229065}]
+2024-09-04 15:00:15,794 - INFO - Connections: [{'in_node_id': 4, 'out_node_id': 3, 'weight': -1.0385421514511108, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:20,037 - INFO - Generation 4 Best Bird:
+2024-09-04 15:00:20,037 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.7177419066429138, 'output_value': 0.7177419066429138}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': -0.17419706284999847, 'output_value': 0.45656055212020874}, {'id': 4, 'type': 1, 'input_sum': 0.07626348733901978, 'output_value': 0.07626348733901978}]
+2024-09-04 15:00:20,037 - INFO - Connections: [{'in_node_id': 1, 'out_node_id': 3, 'weight': -0.24133093655109406, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:24,308 - INFO - Generation 5 Best Bird:
+2024-09-04 15:00:24,308 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.45967742800712585, 'output_value': 0.45967742800712585}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': -0.204965278506279, 'output_value': 0.4489372968673706}, {'id': 4, 'type': 1, 'input_sum': 0.695030152797699, 'output_value': 0.695030152797699}]
+2024-09-04 15:00:24,308 - INFO - Connections: [{'in_node_id': 4, 'out_node_id': 3, 'weight': -0.2949012815952301, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:28,522 - INFO - Generation 6 Best Bird:
+2024-09-04 15:00:28,522 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.7532258033752441, 'output_value': 0.7532258033752441}, {'id': 1, 'type': 1, 'input_sum': 0.721818208694458, 'output_value': 0.721818208694458}, {'id': 2, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 3, 'type': 3, 'input_sum': 0.0, 'output_value': 0.5}, {'id': 4, 'type': 1, 'input_sum': 0.6561973094940186, 'output_value': 0.6561973094940186}, {'id': 5, 'type': 2, 'input_sum': 0.0, 'output_value': 0.5}]
+2024-09-04 15:00:28,522 - INFO - Connections: [{'in_node_id': 0, 'out_node_id': 3, 'weight': -0.9475386142730713, 'enabled': True, 'innovation': 0}]
+
+2024-09-04 15:00:32,783 - INFO - Generation 7 Best Bird:
+2024-09-04 15:00:32,783 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.15322580933570862, 'output_value': 0.15322580933570862}, {'id': 1, 'type': 1, 'input_sum': 0.014545454643666744, 'output_value': 0.014545454643666744}, {'id': 2, 'type': 1, 'input_sum': 0.008064515888690948, 'output_value': 0.008064515888690948}, {'id': 3, 'type': 3, 'input_sum': 0.0005664583295583725, 'output_value': 0.5001416206359863}, {'id': 4, 'type': 1, 'input_sum': 0.8288812041282654, 'output_value': 0.8288812041282654}, {'id': 5, 'type': 2, 'input_sum': 0.0, 'output_value': 0.5}]
+2024-09-04 15:00:32,783 - INFO - Connections: [{'in_node_id': 1, 'out_node_id': 3, 'weight': 0.156028613448143, 'enabled': True, 'innovation': 0}, {'in_node_id': 2, 'out_node_id': 3, 'weight': -0.21117806434631348, 'enabled': True, 'innovation': 1}]
+
+2024-09-04 15:00:37,074 - INFO - Generation 8 Best Bird:
+2024-09-04 15:00:37,074 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.14677418768405914, 'output_value': 0.14677418768405914}, {'id': 1, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 2, 'type': 1, 'input_sum': 0.014516129158437252, 'output_value': 0.014516129158437252}, {'id': 3, 'type': 3, 'input_sum': -0.003586953040212393, 'output_value': 0.49910324811935425}, {'id': 4, 'type': 1, 'input_sum': 0.7267888784408569, 'output_value': 0.7267888784408569}, {'id': 5, 'type': 2, 'input_sum': 0.0, 'output_value': 0.5}]
+2024-09-04 15:00:37,074 - INFO - Connections: [{'in_node_id': 1, 'out_node_id': 3, 'weight': 0.19587990641593933, 'enabled': True, 'innovation': 0}, {'in_node_id': 2, 'out_node_id': 3, 'weight': -0.24710120260715485, 'enabled': True, 'innovation': 1}]
+
+2024-09-04 15:00:41,333 - INFO - Generation 9 Best Bird:
+2024-09-04 15:00:41,333 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.15000000596046448, 'output_value': 0.15000000596046448}, {'id': 1, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 2, 'type': 1, 'input_sum': 0.011290322989225388, 'output_value': 0.011290322989225388}, {'id': 3, 'type': 3, 'input_sum': -0.0027898524422198534, 'output_value': 0.49930253624916077}, {'id': 4, 'type': 1, 'input_sum': 0.0018664002418518066, 'output_value': 0.0018664002418518066}, {'id': 5, 'type': 2, 'input_sum': 0.0, 'output_value': 0.5}]
+2024-09-04 15:00:41,333 - INFO - Connections: [{'in_node_id': 1, 'out_node_id': 3, 'weight': 0.19587990641593933, 'enabled': True, 'innovation': 0}, {'in_node_id': 2, 'out_node_id': 3, 'weight': -0.24710120260715485, 'enabled': True, 'innovation': 1}]
+
+2024-09-04 15:00:57,864 - INFO - Generation 10 Best Bird:
+2024-09-04 15:00:57,864 - INFO - Nodes: [{'id': 0, 'type': 1, 'input_sum': 0.0, 'output_value': 0.0}, {'id': 1, 'type': 1, 'input_sum': 0.37454545497894287, 'output_value': 0.37454545497894287}, {'id': 2, 'type': 1, 'input_sum': 0.25, 'output_value': 0.25}, {'id': 3, 'type': 3, 'input_sum': -0.054094478487968445, 'output_value': 0.48647964000701904}, {'id': 4, 'type': 1, 'input_sum': 0.027177751064300537, 'output_value': 0.027177751064300537}, {'id': 5, 'type': 2, 'input_sum': 0.0, 'output_value': 0.5}]
+2024-09-04 15:00:57,864 - INFO - Connections: [{'in_node_id': 0, 'out_node_id': 3, 'weight': -0.029862500727176666, 'enabled': True, 'innovation': 0}, {'in_node_id': 2, 'out_node_id': 3, 'weight': -0.27119383215904236, 'enabled': True, 'innovation': 1}, {'in_node_id': 4, 'out_node_id': 3, 'weight': 0.5042352676391602, 'enabled': True, 'innovation': 2}]
+
