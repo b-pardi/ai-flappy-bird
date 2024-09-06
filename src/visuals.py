@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+import os
+import pygame
 
 from src.neat import NodeType
+import src.components as components
 
 def visualize_nets(nets, gen):
     """
@@ -38,7 +41,7 @@ def visualize_nets(nets, gen):
         # Calculate y-coordinates for vertical centering
         input_y = np.linspace(0, 1, len(input_nodes))[::-1]  # Vertically center input nodes
         hidden_y = np.linspace(0.7, 1.2 + len(hidden_nodes) // 5, len(hidden_nodes)) if len(hidden_nodes) > 0 else [0]  # Center hidden nodes
-        output_y = np.linspace(0, 1, len(output_nodes))  # Vertically center output nodes
+        output_y = np.linspace(0, 1, len(output_nodes))
 
         # Initialize positions dictionary
         pos = {}
@@ -104,3 +107,114 @@ def visualize_nets(nets, gen):
     plt.draw()  # Redraw the current figure
     plt.pause(0.001)  # Non-blocking show
 
+def pygame_network_visualizer(screen, net, x_offset):
+    """
+    Draws the neural network visualization directly on the main Pygame screen.
+    
+    Args:
+    - screen: The main Pygame screen.
+    - net (Net): The network object containing nodes and connections.
+    - x_offset (int): Horizontal offset for the drawing area.
+    - y_offset (int): Vertical offset for the drawing area.
+    """
+
+    font = pygame.font.SysFont('LucidaConsole', 18)
+    bigger_font = pygame.font.SysFont('LucidaConsole', 24)
+
+    colors = {
+        'input': (173, 216, 230),   # Light blue
+        'hidden': (144, 238, 144),  # Light green
+        'output': (240, 128, 128),  # Light coral
+        'text': (200, 200, 200),    # Light gray
+        'id_text': (0, 0, 0),       # Black
+        'edge': (100, 100, 100),    # Gray
+        'highlight': (0, 250, 0),   # Green for flapping state
+        'separator': (100,100,100), # bar to separate plot and game
+        'title': (200, 0, 220)      # title color
+    }
+
+    # draw rectangle to separate plot from game
+    separator_rect = pygame.Rect(x_offset, 0, components.Pipe.width, components.WIN_HEIGHT)
+    pygame.draw.rect(screen, colors['separator'], separator_rect)
+
+    # Title text 875
+    title_text_surface = bigger_font.render("Fittest Bird's Network", True, colors['title'])
+    title_loc = (components.WIN_WIDTH_WITH_VISUALS - ((components.WIN_WIDTH_WITH_VISUALS - components.WIN_WIDTH) // 2) - (title_text_surface.get_width() // 2) + components.Pipe.width, 10)
+    screen.blit(title_text_surface, title_loc)
+
+    # Determine positions for the nodes
+    input_nodes = net.nodes[net.nodes['type'] == NodeType.INPUT.value]
+    hidden_nodes = net.nodes[net.nodes['type'] == NodeType.HIDDEN.value]
+    output_nodes = net.nodes[net.nodes['type'] == NodeType.OUTPUT.value]
+
+    input_x, hidden_x, output_x = x_offset + 100, x_offset + 325, x_offset + 550
+    input_y = np.linspace(100, components.WIN_HEIGHT-160, len(input_nodes))
+    hidden_y = np.linspace(components.WIN_HEIGHT - 80, components.WIN_HEIGHT // 2, len(hidden_nodes))[::-1]
+    output_y = np.linspace(70, components.WIN_HEIGHT-400, len(output_nodes))
+
+    node_positions = {}
+    for i, node in enumerate(input_nodes):
+        node_positions[node['id']] = (input_x, input_y[i])
+
+    for i, node in enumerate(hidden_nodes):
+        node_positions[node['id']] = (hidden_x, hidden_y[i])
+
+    for i, node in enumerate(output_nodes):
+        node_positions[node['id']] = (output_x, output_y[i])
+
+    # Draw connections (edges)
+    for conn in net.connections:
+        if conn['enabled']:
+            try: # ensure valid connection is displayed
+                in_pos = node_positions[conn['in_node_id']]
+                out_pos = node_positions[conn['out_node_id']]
+            except KeyError as ke:
+                continue
+            pygame.draw.line(screen, colors['edge'], in_pos, out_pos, 2)
+
+            # Draw weight value
+            mid_pos = ((in_pos[0] + out_pos[0]) // 2, (in_pos[1] + out_pos[1]) // 2)
+            weight_text = f"{conn['weight']:.2f}"
+            text_surface = font.render(weight_text, True, colors['text'])
+            screen.blit(text_surface, mid_pos)
+
+    # Draw nodes
+    input_labels_dict = {0: "Top Pipe\nY Dist", 1: "Closest Pipe\nX Dist", 2: "Bottom Pipe\nY Dist", 4: "Bias"}
+    for node in net.nodes:
+        pos = node_positions[node['id']]
+        node_color = colors['input'] if node['type'] == NodeType.INPUT.value else colors['hidden'] if node['type'] == NodeType.HIDDEN.value else colors['output']
+
+        # Change output node color based on output value
+        if node['type'] == NodeType.OUTPUT.value and node['output_value'] > 0.5:  # Assume output > 0.5 triggers flap
+            node_color = colors['highlight']  # Red color for flap
+
+        pygame.draw.circle(screen, node_color, pos, 20)
+
+        # Draw node ID inside node
+        node_id_text = bigger_font.render(str(node['id']), True, colors['id_text'])
+        text_rect = node_id_text.get_rect(center=pos)  # Center text inside the node
+        screen.blit(node_id_text, text_rect)
+
+        # Draw labels, input sum, and output value centered below each node
+        input_sum = f"Σ: {node['input_sum']:.2f}"
+        output_value = f"σ: {node['output_value']:.2f}"
+        input_text_surface = font.render(input_sum, True, colors['text'])
+        output_text_surface = font.render(output_value, True, colors['text'])
+
+        # Calculate position for centered text below node
+        input_text_pos = (pos[0] - input_text_surface.get_width() // 2, pos[1] + 25)
+        output_text_pos = (pos[0] - output_text_surface.get_width() // 2, pos[1] + 46) 
+        screen.blit(input_text_surface, input_text_pos)
+        screen.blit(output_text_surface, output_text_pos)
+
+        if node['id'] in input_labels_dict.keys(): # draw input node labels
+            # pygame is annoying and doesn't render new lines, so they must be drawn seperately
+            text = input_labels_dict[node['id']]
+            lines = text.split('\n')
+            y_offset = 40
+            for i, line in enumerate(lines):
+                label_text_surface = font.render(line, True, colors['text'])
+                label_text_pos = (pos[0] - label_text_surface.get_width() // 2, pos[1] - y_offset)
+                screen.blit(label_text_surface, label_text_pos)
+                y_offset += 20
+           

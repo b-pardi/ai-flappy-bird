@@ -1,30 +1,30 @@
-2024-09-04 15:00:07,053 - INFO - Generation: 1 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 25.3, Most Pipes Passed: 0, Most Nodes: 5, Most Conns: 1, 
+2024-09-05 19:23:59,582 - INFO - Generation: 1 Species 1/1
+Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 28.06, Most Pipes Passed: 0, Most Nodes: 5, Most Conns: 1, 
 
-2024-09-04 15:00:11,508 - INFO - Generation: 2 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 39.1, Most Pipes Passed: 0, Most Nodes: 6, Most Conns: 2, 
+2024-09-05 19:24:04,829 - INFO - Generation: 2 Species 1/1
+Species Size: 100, Best Fitness: 240.0, Worst Fitness: 0, Avg Fitness: 37.82, Most Pipes Passed: 0, Most Nodes: 6, Most Conns: 2, 
 
-2024-09-04 15:00:15,793 - INFO - Generation: 3 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 37.495, Most Pipes Passed: 0, Most Nodes: 6, Most Conns: 2, 
+2024-09-05 19:24:09,060 - INFO - Generation: 3 Species 1/1
+Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 37.26, Most Pipes Passed: 0, Most Nodes: 6, Most Conns: 2, 
 
-2024-09-04 15:00:20,036 - INFO - Generation: 4 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 40.02, Most Pipes Passed: 0, Most Nodes: 6, Most Conns: 2, 
+2024-09-05 19:24:31,203 - INFO - Generation: 4 Species 1/1
+Species Size: 100, Best Fitness: 2777, Worst Fitness: 0, Avg Fitness: 72.245, Most Pipes Passed: 10, Most Nodes: 7, Most Conns: 3, 
 
-2024-09-04 15:00:24,307 - INFO - Generation: 5 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 39.56, Most Pipes Passed: 0, Most Nodes: 7, Most Conns: 2, 
+2024-09-05 19:25:07,286 - INFO - Generation: 5 Species 1/1
+Species Size: 100, Best Fitness: 4457, Worst Fitness: 0, Avg Fitness: 315.82, Most Pipes Passed: 10, Most Nodes: 6, Most Conns: 4, 
 
-2024-09-04 15:00:28,521 - INFO - Generation: 6 Species 1/1
-Species Size: 100, Best Fitness: 46.0, Worst Fitness: 0, Avg Fitness: 41.4, Most Pipes Passed: 0, Most Nodes: 7, Most Conns: 3, 
+2024-09-05 19:25:29,448 - INFO - Generation: 6 Species 1/1
+Species Size: 100, Best Fitness: 2777, Worst Fitness: 0, Avg Fitness: 333.39, Most Pipes Passed: 10, Most Nodes: 6, Most Conns: 4, 
 
-2024-09-04 15:00:32,782 - INFO - Generation: 7 Species 1/1
-Species Size: 100, Best Fitness: 240.5, Worst Fitness: 0, Avg Fitness: 44.725, Most Pipes Passed: 0, Most Nodes: 7, Most Conns: 3, 
+2024-09-05 19:25:51,628 - INFO - Generation: 7 Species 1/1
+Species Size: 100, Best Fitness: 2777, Worst Fitness: 0, Avg Fitness: 365.78, Most Pipes Passed: 10, Most Nodes: 7, Most Conns: 4, 
 
-2024-09-04 15:00:37,073 - INFO - Generation: 8 Species 1/1
-Species Size: 100, Best Fitness: 255.5, Worst Fitness: 0, Avg Fitness: 50.42, Most Pipes Passed: 0, Most Nodes: 7, Most Conns: 3, 
+2024-09-05 19:26:13,817 - INFO - Generation: 8 Species 1/1
+Species Size: 100, Best Fitness: 2777, Worst Fitness: 0, Avg Fitness: 486.29, Most Pipes Passed: 10, Most Nodes: 7, Most Conns: 4, 
 
-2024-09-04 15:00:41,332 - INFO - Generation: 9 Species 1/1
-Species Size: 100, Best Fitness: 247.5, Worst Fitness: 0, Avg Fitness: 53.15, Most Pipes Passed: 0, Most Nodes: 7, Most Conns: 3, 
+2024-09-05 19:26:35,924 - INFO - Generation: 9 Species 1/1
+Species Size: 100, Best Fitness: 2777, Worst Fitness: 0, Avg Fitness: 574.345, Most Pipes Passed: 10, Most Nodes: 7, Most Conns: 5, 
 
-2024-09-04 15:00:57,863 - INFO - Generation: 10 Species 1/1
-Species Size: 100, Best Fitness: 2024, Worst Fitness: 0, Avg Fitness: 106.43, Most Pipes Passed: 6, Most Nodes: 7, Most Conns: 4, 
+2024-09-05 19:26:58,435 - INFO - Generation: 10 Species 1/1
+Species Size: 100, Best Fitness: 2738, Worst Fitness: 0, Avg Fitness: 549.54, Most Pipes Passed: 6, Most Nodes: 7, Most Conns: 5, 
 

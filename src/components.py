@@ -2,10 +2,8 @@ import pygame
 import random
 
 WIN_WIDTH = 550
+WIN_WIDTH_WITH_VISUALS = 1200 # used for network visuals when running pretrained
 WIN_HEIGHT = 720
-
-clock = pygame.time.Clock()
-window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 
 default_pipe_spawn_time = 240
 pipes = []
@@ -75,7 +73,7 @@ class Bird:
         self.fitness = 0
         self.net = net
 
-    def draw_bird(self):
+    def draw_bird(self, window):
         pygame.draw.rect(window, self.color, self.rect)
 
     def test_ground_collision(self, ground_rect):
@@ -141,7 +139,7 @@ class Bird:
         
         return closest_pipe
             
-    def look(self):
+    def look(self, window):
         if pipes:
             # line to top pipe
             player_y = self.rect.center[1]
@@ -170,8 +168,8 @@ class Bird:
 
         self.fitness = max(0, self.fitness)
 
-    def think(self):
-        self.look()
+    def think(self, window):
+        self.look(window)
         output = self.net.feed_forward(self.vision)
         if output[0] > 0.5:
             self.flap()
