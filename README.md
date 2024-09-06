@@ -76,12 +76,11 @@ Example usage: `python main.py -g x` where 'x' is an integer of pipes to reach (
 - **`src.neat.py`**: Contains the NEAT algorithm implementation and logic for evolving neural networks. Has the Net and Population classes.
 - **`src.components.py`**: Defines the Pipe, Ground, and most importantly, Bird class that handles AI decision-making and interaction with the game. This is where inputs are fed to the network, and fitness functions are defined.
 - **`src.visuals.py`**: Functions for visualizing the neural network structures and game state.
-- **`pipes.py`**: Handles the game logic for pipes.
-- **`components/`**: Contains additional game components and assets.
 - **`logs/networks.log`**: Log file for recording the architecture of the best bird after each generation.
 - **`logs/fitness_stats.log`**: Log file for recording the Fitness stats globally and across species for each generation as training progresses.
 - **`logs/fitness_stats.log`**: Log file for recording the architecture of the best and worst birds after each generation.
 - **`best_bird_net.pkl`**: Serialized `Net` object of the pre-trained best bird available for demonstration. This is what is loaded when running pretrained demo `python main.py -p`
+- **`minimal_net.pkl`**: Serialized `Net` object of the pre-trained best bird available with **only 2 connections**. Exists to showcase how this algorithm is able to find a working solution as efficiently as possible.
 - **`recent_best_bird_net.pkl`**: Serialized object of the most recently trained best bird's network recorded automatically upon closing game.
 
 ## Visualization
