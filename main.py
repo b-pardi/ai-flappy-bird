@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pickle
 import src.components as components
 from src.neat import Population
-from src.visuals import visualize_nets, pygame_network_visualizer
+from src.visuals import visualize_nets, pygame_network_visualizer, VisualizerType
 
 pygame.init()
 pygame.font.init()  # Initialize font module
@@ -31,8 +31,12 @@ def load_best_bird_brain(path):
         return pickle.load(bird_brain)
 
 
-def main_game_loop(pipe_goal):
-    window = pygame.display.set_mode((components.WIN_WIDTH_WITH_VISUALS, components.WIN_HEIGHT))
+def main_game_loop(pipe_goal, visualizer_type):
+    if visualizer_type == VisualizerType.PYGAME:
+        window = pygame.display.set_mode((components.WIN_WIDTH_WITH_VISUALS, components.WIN_HEIGHT))
+    else:
+        window = pygame.display.set_mode((components.WIN_WIDTH, components.WIN_HEIGHT))
+        
     pygame.display.set_caption('Training Flappy Bird...')
     population = Population(size=100, n_init_conns=1)
     pipe_spawn_time = 0
@@ -43,7 +47,7 @@ def main_game_loop(pipe_goal):
     while population.gen <= max_generations:
         # check_events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 population.evaluate_fitness()
                 save_best_player(population, lead_species)
@@ -97,9 +101,10 @@ def main_game_loop(pipe_goal):
         window.blit(best_text, (10, window.get_height() - 60))
         window.blit(lead_species_text, (10, window.get_height() - 30))
 
-        pygame_network_visualizer(window, fittest_bird.net, components.WIN_WIDTH)
+        if visualizer_type == VisualizerType.PYGAME:
+            pygame_network_visualizer(window, fittest_bird.net, components.WIN_WIDTH)
 
-        if not current_plot_updated and best_pipes_passed > 2:
+        if visualizer_type == VisualizerType.MATPLOTLIB and not current_plot_updated and best_pipes_passed > 2:
             current_plot_updated = True
             visualize_nets([best_bird.net], population.gen + 1)
         
@@ -109,7 +114,9 @@ def main_game_loop(pipe_goal):
             population.evaluate_fitness()
             population.speciation()
             population.log_progress()
-            visualize_nets([bird.net for bird in population.species_reps], population.gen)
+
+            if visualizer_type == VisualizerType.MATPLOTLIB:
+                visualize_nets([bird.net for bird in population.species_reps], population.gen)
 
             population.repopulate()
 
@@ -120,10 +127,15 @@ def main_game_loop(pipe_goal):
         clock.tick(FPS)
         pygame.display.flip()
 
-def pretrained_bird_game_loop():
-    window = pygame.display.set_mode((components.WIN_WIDTH_WITH_VISUALS, components.WIN_HEIGHT))
-    pygame.display.set_caption('Pretrained Flappy Bird with Live Network Visualizer')
+def pretrained_bird_game_loop(visualizer_type):
+    if visualizer_type == VisualizerType.PYGAME:
+        window = pygame.display.set_mode((components.WIN_WIDTH_WITH_VISUALS, components.WIN_HEIGHT))
+    else:
+        window = pygame.display.set_mode((components.WIN_WIDTH, components.WIN_HEIGHT))
     
+    pygame.display.set_caption('Pretrained Flappy Bird with Live Network Visualizer')
+    plot_refresh_counter = 1
+
     # load best bird's brain
     best_bird_net, best_bird_gen, best_bird_species_idx = load_best_bird_brain("logs/best_bird_net.pkl")
     best_bird = components.Bird(best_bird_net)
@@ -133,7 +145,7 @@ def pretrained_bird_game_loop():
     while True:
         # check_events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 sys.exit()
 
@@ -171,8 +183,14 @@ def pretrained_bird_game_loop():
         window.blit(best_text, (10, window.get_height() - 60))
         window.blit(lead_species_text, (10, window.get_height() - 30))
 
-        pygame_network_visualizer(window, best_bird.net, components.WIN_WIDTH)
-        
+        if visualizer_type == VisualizerType.PYGAME:
+            pygame_network_visualizer(window, best_bird.net, components.WIN_WIDTH)
+        elif visualizer_type == VisualizerType.MATPLOTLIB:
+            plot_refresh_counter -= 1
+            if plot_refresh_counter <= 0:
+                plot_refresh_counter = 1000
+                visualize_nets([best_bird.net], best_bird_gen)
+
         if not best_bird.alive:
             pygame.quit()
             sys.exit()
@@ -184,14 +202,15 @@ def pretrained_bird_game_loop():
 
 def main():
     parser = argparse.ArgumentParser(description="AI Flappy bird")
+    parser.add_argument('-v', '--visualizer_type', type=lambda v: VisualizerType(v), default=VisualizerType.PYGAME, choices=[choice.value for choice in VisualizerType], help="Choose between using matplotlib or pygame for network visualizer, or disable it")
     parser.add_argument('-p', '--pretrained', action='store_true', help="Use pretrained bird for demonstration")
     parser.add_argument('-g', '--goal_pipes', type=int, default=None, help="Set a goal for pipes passed for the lead bird, which will trigger repopulation when reached")
     args = parser.parse_args()
 
     if args.pretrained:
-        pretrained_bird_game_loop()
+        pretrained_bird_game_loop(args.visualizer_type)
     else:
-        main_game_loop(args.goal_pipes)
+        main_game_loop(args.goal_pipes, args.visualizer_type)
 
 if __name__ == '__main__':
     main()

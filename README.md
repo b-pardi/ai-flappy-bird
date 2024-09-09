@@ -60,9 +60,14 @@ To run the project, follow these steps:
 3. **Visualizing the Networks:**
     The AI’s neural networks can be visualized while training using the built-in visualization tools.
 
+4. **Exiting:**
+    Press ESC or close the pygame window to exit. If in standard learning mode, upon a safe exit the script will save the net of the best bird as a pkl object that can be later loaded back into for visualizing and comparison with other saved bird brains.
+
 ## CLI Arguments
 
 The `main.py` script accepts the following command-line arguments to customize the behavior of the game and the AI:
+
+- **`-v` or `--visualizer_type`**: Choose to use the pygame visualizer that shows the network in the game window by using `-v pygame` (default), or use the matplotlib visualizer showing the network as a plot in a separate window with `-v matplotlib` (bit slower and resfreshes less). Optionally, you may also turn off visualization for whatever reason with `-v disabled` (it's fine it just hurts my feelings)
 
 - **`-p` or `--pretrained`**: Runs the game using the pre-trained bird model for demonstration purposes.
 Example usage: `python main.py -p`
