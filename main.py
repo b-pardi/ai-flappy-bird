@@ -1,6 +1,7 @@
 import pygame
 import argparse
 import sys
+import os
 import matplotlib.pyplot as plt
 import pickle
 import src.components as components
@@ -26,10 +27,19 @@ def save_best_player(population, lead_species_idx):
     with open('logs/recent_best_bird_net.pkl', 'wb') as file:
         pickle.dump((best_bird.net, population.gen, lead_species_idx), file)
 
-def load_best_bird_brain(path):
+def load_best_bird_brain(pretrained_type):
+    if pretrained_type == "minimal_network":
+        path = "logs/minimal_net.pkl"
+    if pretrained_type == "super_evolved":
+        path = "logs/super_evolved.pkl"
+    elif pretrained_type == "recent_bird":
+        path = "logs/recent_best_bird_net.pkl"
+        if not os.path.exists(path):
+            raise FileNotFoundError("Could not find recently trained best bird, make sure you have run a training loop first with 'python main.py'")
+
+
     with open(path, 'rb') as bird_brain:
         return pickle.load(bird_brain)
-
 
 def main_game_loop(pipe_goal, visualizer_type):
     if visualizer_type == VisualizerType.PYGAME:
@@ -127,7 +137,7 @@ def main_game_loop(pipe_goal, visualizer_type):
         clock.tick(FPS)
         pygame.display.flip()
 
-def pretrained_bird_game_loop(visualizer_type):
+def pretrained_bird_game_loop(visualizer_type, pretrained_type):
     if visualizer_type == VisualizerType.PYGAME:
         window = pygame.display.set_mode((components.WIN_WIDTH_WITH_VISUALS, components.WIN_HEIGHT))
     else:
@@ -137,7 +147,7 @@ def pretrained_bird_game_loop(visualizer_type):
     plot_refresh_counter = 1
 
     # load best bird's brain
-    best_bird_net, best_bird_gen, best_bird_species_idx = load_best_bird_brain("logs/best_bird_net.pkl")
+    best_bird_net, best_bird_gen, best_bird_species_idx = load_best_bird_brain(pretrained_type)
     best_bird = components.Bird(best_bird_net)
     pipe_spawn_time = 0
     frame_counter = 0
@@ -202,15 +212,15 @@ def pretrained_bird_game_loop(visualizer_type):
 
 def main():
     parser = argparse.ArgumentParser(description="AI Flappy bird")
-    parser.add_argument('-v', '--visualizer_type', type=lambda v: VisualizerType(v), default=VisualizerType.PYGAME, choices=[choice.value for choice in VisualizerType], help="Choose between using matplotlib or pygame for network visualizer, or disable it")
-    parser.add_argument('-p', '--pretrained', action='store_true', help="Use pretrained bird for demonstration")
+    parser.add_argument('-v', '--visualizer_type', type=lambda v: VisualizerType(v).value, default=VisualizerType.PYGAME.value, choices=[choice.value for choice in VisualizerType], help="Choose between using matplotlib or pygame for network visualizer, or disable it")
+    parser.add_argument('-p', '--pretrained', type=str, choices=['minimal_network', 'super_evolved', 'recent_bird'], help="Use pretrained bird for demonstration, choosing between the minimal network connections, a super evolved network with crazy mutations (after 100 generations), or regular best bird sample. All are able to run infinitely.")
     parser.add_argument('-g', '--goal_pipes', type=int, default=None, help="Set a goal for pipes passed for the lead bird, which will trigger repopulation when reached")
     args = parser.parse_args()
 
     if args.pretrained:
-        pretrained_bird_game_loop(args.visualizer_type)
+        pretrained_bird_game_loop(VisualizerType(args.visualizer_type), args.pretrained)
     else:
-        main_game_loop(args.goal_pipes, args.visualizer_type)
+        main_game_loop(args.goal_pipes, VisualizerType(args.visualizer_type))
 
 if __name__ == '__main__':
     main()

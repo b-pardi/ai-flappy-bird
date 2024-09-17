@@ -1,3 +1,7 @@
+logs/fitness_stats.log
+logs/networks.log
+logs/recent_best_bird.pkl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 src/pycache/

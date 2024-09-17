@@ -69,7 +69,11 @@ The `main.py` script accepts the following command-line arguments to customize t
 
 - **`-v` or `--visualizer_type`**: Choose to use the pygame visualizer that shows the network in the game window by using `-v pygame` (default), or use the matplotlib visualizer showing the network as a plot in a separate window with `-v matplotlib` (bit slower and resfreshes less). Optionally, you may also turn off visualization for whatever reason with `-v disabled` (it's fine it just hurts my feelings)
 
-- **`-p` or `--pretrained`**: Runs the game using the pre-trained bird model for demonstration purposes.
+- **`-p` or `--pretrained`**: Runs the game using the pre-trained bird model for demonstration purposes. Must also specify which pretrained version to use. Choices are:
+    - minimal_network: A minimally evolved network that has the smallest number of connections evolved that can still play the game infinitely
+    - super_evolved: The best bird after 28 generations that evolved many nodes and connections. 
+    - recent_bird: This is where you can load your own most recent bird.
+**Note:** All pretrained versions can run infinitely, these are just differently evolved variations with the same capabilities.
 Example usage: `python main.py -p`
 
 - **`-g` or `--goal_pipes`**: Sets a target number of pipes for the leading bird to pass. Once this goal is reached, the population will die, and a new generation will be repopulated. This is useful for testing the evolution over more generations and improving the average fitness of the population, since the algorithm typically gets at least one bird to run *ad infintum* rather quickly.
