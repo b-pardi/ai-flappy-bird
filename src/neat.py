@@ -87,6 +87,12 @@ class Net:
 
         self.connections = np.append(self.connections, new_conn)
 
+    def get_connected_nodes(self):
+        enabled_conns = self.connections[self.connections['enabled']]
+        connected_node_ids = np.unique(np.concatenate((enabled_conns['in_node_id'], enabled_conns['out_node_id'])))
+        connected_nodes = self.nodes[(np.isin(self.nodes['id'], connected_node_ids)) | (self.nodes['type'] == NodeType.INPUT.value)]
+        return connected_nodes
+
     def mutate_weight(self):
         for connection in self.connections:
             if np.random.rand() < 0.1:  # 10% chance to completely change the weight

@@ -186,7 +186,7 @@ def pygame_network_visualizer(screen, net, x_offset):
 
     # Draw nodes
     input_labels_dict = {0: "Top Pipe\nY Dist", 1: "Closest Pipe\nX Dist", 2: "Bottom Pipe\nY Dist", 4: "Bias"}
-    for node in net.nodes:
+    for node in net.get_connected_nodes():
         pos = node_positions[node['id']]
         node_color = colors['input'] if node['type'] == NodeType.INPUT.value else colors['hidden'] if node['type'] == NodeType.HIDDEN.value else colors['output']
 
