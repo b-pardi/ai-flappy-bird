@@ -3,9 +3,15 @@ import networkx as nx
 import numpy as np
 import os
 import pygame
+from enum import Enum
 
 from src.neat import NodeType
 import src.components as components
+
+class VisualizerType(Enum):
+    MATPLOTLIB = 'matplotlib'
+    PYGAME = 'pygame'
+    DISABLED = 'disabled'
 
 def visualize_nets(nets, gen):
     """
